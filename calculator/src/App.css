@@ -1,0 +1,77 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+body {
+  background-color: royalblue;
+}
+
+.calculator {
+  margin: 40px 40px 40px 40px;
+  padding: 10px 10px 10px 10px;
+  border: 1px black solid;
+  border-radius: 20px;
+  background-color: blueviolet;
+  box-shadow: 5px 5px #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input {
+  border: 1px black solid;
+  border-radius: 20px;
+  height: 4em;
+  background-color: teal;
+  color: #222;
+  font-size: 1.5em;
+  font-family: monospace;
+  font-weight: bold;
+  text-align: right;
+  box-shadow: 1px 1px #333;
+}
+
+.buttonContainer {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.button {
+  border: 1px black solid;
+  border-radius: 20px;
+  margin: 0px 4px 4px 0px;
+  padding: 10px 10px 10px 10px;
+  width: 2.3em;
+  background-color: darkcyan;
+  color: gold;
+  box-shadow: 2px 2px #333;
+  font-size: 1.5em;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.button2 {
+  border: 1px black solid;
+  border-radius: 20px;
+  margin: 0px 4px 4px 0px;
+  padding: 10px 10px 10px 10px;
+  width: 2.3em;
+  background-color: hotpink;
+  color: gold;
+  box-shadow: 2px 2px #333;
+  font-size: 1.5em;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
+.title {
+  padding: 2px 2px 2px 2px;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

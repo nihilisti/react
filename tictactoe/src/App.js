@@ -41,30 +41,6 @@ function App() {
       }
     }
 
-    if (sign1 === "X" && sign2 === "X" && sign3 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign4 === "X" && sign7 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign5 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign2 === "O" && sign3 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign4 === "O" && sign7 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign5 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign1 === "X" || sign1 === "O") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
@@ -79,22 +55,6 @@ function App() {
       } else {
         setTurn("X")
       }
-    }
-
-    if (sign1 === "X" && sign2 === "X" && sign3 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign2 === "X" && sign5 === "X" && sign8 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign2 === "O" && sign3 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign2 === "O" && sign5 === "O" && sign8 === "O") {
-      alert("Tic tac toe! Game ended.");
     }
 
     if (sign2 === "X" || sign2 === "O") {
@@ -113,30 +73,6 @@ function App() {
       }
     }
 
-    if (sign1 === "X" && sign2 === "X" && sign3 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "X" && sign5 === "X" && sign7 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "X" && sign6 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign2 === "O" && sign3 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "O" && sign5 === "O" && sign7 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "O" && sign6 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign3 === "X" || sign3 === "0") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
@@ -153,22 +89,6 @@ function App() {
       }
     }
 
-    if (sign4 === "X" && sign5 === "X" && sign6 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign4 === "X" && sign7 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign4 === "O" && sign5 === "O" && sign6 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign4 === "O" && sign7 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign4 === "X" || sign4 === "O") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
@@ -183,30 +103,6 @@ function App() {
       } else {
         setTurn("X")
       }
-    }
-
-    if (sign2 === "X" && sign5 === "X" && sign8 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign4 === "X" && sign5 === "X" && sign6 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign5 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign2 === "O" && sign5 === "O" && sign8 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign4 === "O" && sign5 === "O" && sign6 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign5 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
     }
 
     if (sign5 === "X" || sign5 === "O") {
@@ -226,22 +122,6 @@ function App() {
       }
     }
 
-    if (sign3 === "X" && sign6 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign4 === "X" && sign5 === "X" && sign6 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "O" && sign6 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign4 === "O" && sign5 === "O" && sign6 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign6 === "X" || sign6 === "O") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
@@ -256,30 +136,6 @@ function App() {
       } else {
         setTurn("X")
       }
-    }
-
-    if (sign7 === "X" && sign8 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign4 === "X" && sign7 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "X" && sign5 === "X" && sign7 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign7 === "O" && sign8 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign4 === "O" && sign7 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "O" && sign5 === "O" && sign7 === "O") {
-      alert("Tic tac toe! Game ended.");
     }
 
     if (sign7 === "X" || sign7 === "O") {
@@ -298,22 +154,6 @@ function App() {
       }
     }
 
-    if (sign2 === "X" && sign5 === "X" && sign8 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign7 === "X" && sign8 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign2 === "O" && sign5 === "O" && sign8 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign7 === "O" && sign8 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign8 === "X" || sign8 === "O") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
@@ -330,36 +170,77 @@ function App() {
       }
     }
 
-    if (sign7 === "X" && sign8 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "X" && sign5 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "X" && sign6 === "X" && sign9 === "X") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign7 === "O" && sign8 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign1 === "O" && sign5 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
-    if (sign3 === "O" && sign6 === "O" && sign9 === "O") {
-      alert("Tic tac toe! Game ended.");
-    }
-
     if (sign9 === "X" || sign9 === "O") {
       alert("This space is already filled. Try clicking somewhere else.");
     }
   }
 
   const Narrator = () => {
+
+    if (sign1 === "X" && sign2 === "X" && sign3 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign1 === "O" && sign2 === "O" && sign3 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign1 === "X" && sign4 === "X" && sign7 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign1 === "O" && sign4 === "O" && sign7 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign1 === "X" && sign5 === "X" && sign9 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign1 === "O" && sign5 === "O" && sign9 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign2 === "X" && sign5 === "X" && sign8 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign2 === "O" && sign5 === "O" && sign8 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign3 === "X" && sign6 === "X" && sign9 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign3 === "O" && sign6 === "O" && sign9 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign3 === "X" && sign5 === "X" && sign7 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign3 === "O" && sign5 === "O" && sign7 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign4 === "X" && sign5 === "X" && sign6 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign4 === "O" && sign5 === "O" && sign6 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign7 === "X" && sign8 === "X" && sign9 === "X") {
+      return "Tic tac toe! Game ended.";
+    }
+
+    if (sign7 === "O" && sign8 === "O" && sign9 === "O") {
+      return "Tic tac toe! Game ended.";
+    }
+
     if (turn === "X") {
       return "Player 1's turn.";
     }

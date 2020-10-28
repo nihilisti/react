@@ -5,7 +5,6 @@ import Objection from './Object';
 // import App from './App';
 // import Map from './Map';
 // import DataGrid from './GridDemo'
-// import Lists from './Lists';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

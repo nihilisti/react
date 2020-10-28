@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Objection from './Object';
 // import App from './App';
-import Map from './Map';
+// import Map from './Map';
 // import DataGrid from './GridDemo'
+// import Lists from './Lists';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Map />
+    <Objection />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+// import ObjectTehtava from './ObjectTehtava';
 import Objection from './Object';
 // import App from './App';
 // import Map from './Map';

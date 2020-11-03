@@ -1,19 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-// import logo from './logo.svg';
+import ChildList from './ChildList'
 // import './App.css';
 
 function Objection() {
 
-    const [data, setData] = useState([
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42,
-            children: [{ childName: "Joffrey",
-                childNames: [{ firstName: "Joffrey", middleName: "Idk" }] },
+    const [data, setData] = useState([])
+    // const [lastName, setLastName] = useState("")
+
+    const initialData = [
+        { lastName: 'Snow', firstName: 'Jon', age: 35 },
+        {
+            lastName: 'Lannister', firstName: 'Cersei', age: 42,
+            children: [{
+                childName: "Joffrey",
+                childNames: [{ firstName: "Joffrey", middleName: "Idk" }]
+            },
             { childName: "Tommen" }]
         },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    ]);
+        { lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+    ];
+
+    useEffect(() => {
+
+        let jemma = window.localStorage;
+        let tempData = JSON.parse(jemma.getItem("data"))
+        if (tempData == null) {
+            jemma.setItem("data", JSON.stringify(initialData))
+            tempData = initialData
+        } else {
+            if (tempData.length == 0) {
+                jemma.setItem("data", JSON.stringify(initialData))
+                tempData = initialData
+            }
+        }
+        setData(tempData);
+
+    },
+        [])
+
+    useEffect(() => {
+
+        window.localStorage.setItem("data", JSON.stringify(data))
+
+    },
+        [data])
 
     const buttonPressed = () => {
         // let newData = [...data]
@@ -22,16 +53,33 @@ function Objection() {
         setData(finalData)
     }
 
-    const showChildren = (item) => {
-        if (item.children !== undefined) {
-            return item.children.map(alkio => <div>{alkio.childName}</div>)
+    const showChildren = (index) => {
+        if (data[index].children !== undefined) {
+            return data[index].children.map((alkio, childIndex) => <div key={childIndex}><input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}></input></div>)
         }
+    }
+
+    const childNameChanged = (event, parentIndex, childIndex) => {
+        let deepCopy = JSON.parse(JSON.stringify(data))
+        deepCopy[parentIndex].children[childIndex].childName = event.target.value;
+        setData(deepCopy)
+    }
+
+    const lastNameChanged = (event, index) => {
+        let deepCopy = JSON.parse(JSON.stringify(data))
+        deepCopy[index].lastName = event.target.value;
+        setData(deepCopy)
     }
 
     return (
         <div>
-            {data.map(item => <div>{item.lastName} {item.firstName} {item.age}
-            {showChildren(item)}</div>)}
+            {data.map((item, index) => <div key={index}>
+                <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}></input>
+                {item.firstName}
+                {item.age}
+                {item.children ? <ChildList childNameChanged={childNameChanged} parentIndex={index} childList={item.children} /> : ""}
+                <ChildList parentIndex={index} childList={item.children} />
+            </div>)}
             <button onClick={buttonPressed}>Press me</button>
         </div>
     );

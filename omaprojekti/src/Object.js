@@ -6,7 +6,7 @@ import ChildList from './ChildList'
 function Objection() {
 
     const [data, setData] = useState([])
-    // const [lastName, setLastName] = useState("")
+    const [dataAlustettu, setDataAlustettu] = useState(false)
 
     const initialData = [
         { lastName: 'Snow', firstName: 'Jon', age: 35 },
@@ -29,25 +29,23 @@ function Objection() {
             jemma.setItem("data", JSON.stringify(initialData))
             tempData = initialData
         } else {
-            if (tempData.length == 0) {
+            if (tempData.length === 0) {
                 jemma.setItem("data", JSON.stringify(initialData))
                 tempData = initialData
             }
         }
         setData(tempData);
-
+        setDataAlustettu(true)
     },
         [])
 
     useEffect(() => {
-
-        window.localStorage.setItem("data", JSON.stringify(data))
-
-    },
-        [data])
+        if (dataAlustettu) {
+            window.localStorage.setItem("data", JSON.stringify(data))
+        }
+    }, [data])
 
     const buttonPressed = () => {
-        // let newData = [...data]
         let newData = JSON.parse(JSON.stringify(data))
         let finalData = data.concat(newData)
         setData(finalData)
@@ -55,9 +53,20 @@ function Objection() {
 
     const showChildren = (index) => {
         if (data[index].children !== undefined) {
-            return data[index].children.map((alkio, childIndex) => <div key={childIndex}><input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}></input></div>)
+            return data[index].children.map((alkio, childIndex) =>
+                <div key={childIndex}>
+                    <input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}>
+                    </input>
+                </div>)
+
         }
     }
+
+    // const showChildren = (index) => {
+    //     if (data[index].children !== undefined) {
+    //         return data[index].children.map((alkio, childIndex) => <div key={childIndex}><input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}></input></div>)
+    //     }
+    // }
 
     const childNameChanged = (event, parentIndex, childIndex) => {
         let deepCopy = JSON.parse(JSON.stringify(data))
@@ -74,11 +83,16 @@ function Objection() {
     return (
         <div>
             {data.map((item, index) => <div key={index}>
-                <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}></input>
+
+                <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}>
+                </input> {item.firstName} {item.age}
+                {item.children ? <ChildList childNameChanged={childNameChanged} parentIndex={index} childList={item.children}></ChildList> : ""}
+
+                {/* <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}></input>
                 {item.firstName}
                 {item.age}
                 {item.children ? <ChildList childNameChanged={childNameChanged} parentIndex={index} childList={item.children} /> : ""}
-                <ChildList parentIndex={index} childList={item.children} />
+                <ChildList parentIndex={index} childList={item.children} /> */}
             </div>)}
             <button onClick={buttonPressed}>Press me</button>
         </div>

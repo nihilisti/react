@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
-function ChildList(props) {
+function ChildList (props) {
     return (
         <div>
             {props.childList.map((alkio, childIndex) =>

@@ -7,11 +7,15 @@ function AddAnswers(props) {
     // const [checked, setChecked] = React.useState(true);
 
     const handleChange = (answerIndex, event) => {
-        props.answerPicked(props.parentIndex, props.index, answerIndex, event)
+        props.answerPicked(props.examIndex, props.questionIndex, answerIndex, event)
     };
 
     const handleTextChange = (answerIndex, event) => {
-        props.itemEdited(props.parentIndex, props.index, answerIndex, event)
+        props.itemEdited(props.examIndex, props.questionIndex, answerIndex, event)
+    };
+
+    const handleDelete = (answerIndex, event) => {
+        props.deleteItem(props.examIndex, props.questionIndex, answerIndex, event)
     };
 
     return (
@@ -28,6 +32,7 @@ function AddAnswers(props) {
                         className="input"
                         value={alkio.answer}>
                     </input>
+                    <button className="button3" onClick={(event) => handleDelete(answerIndex, event)}>-</button>
                 </div>)}
         </div>
     );

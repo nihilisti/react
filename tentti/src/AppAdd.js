@@ -74,31 +74,39 @@ function App() {
         setData(finalData)
     }
 
-    const answerPicked = (mainIndex, parentIndex, answerIndex, event) => {
+    const answerPicked = (examIndex, questionIndex, answerIndex, event) => {
         let deepCopy = JSON.parse(JSON.stringify(data))
-        deepCopy[mainIndex].questions[parentIndex].answers[answerIndex].picked = event.target.checked;
+        deepCopy[examIndex].questions[questionIndex].answers[answerIndex].picked = event.target.checked;
         setData(deepCopy)
     }
 
-    // const showAnswers = (item) => {
-    //     setPalautus(true)
-    // }
+    const showAnswers = (examIndex, questionIndex, answerIndex, event) => {
+        let deepCopy = JSON.parse(JSON.stringify(data))
+        deepCopy[examIndex].questions[questionIndex].answers[answerIndex].correct = event.target.checked;
+        setData(deepCopy)
+    }
 
     const changeQuestions = (index) => {
         setActiveTest(index)
     }
 
-    const addItem = (mainIndex, parentIndex) => {
+    const addItem = (mainIndex, questionIndex) => {
         let deepCopy = JSON.parse(JSON.stringify(data))
-        deepCopy[mainIndex].questions[parentIndex].answers.push({ answer: "", correct: false, picked: false })
+        deepCopy[mainIndex].questions[questionIndex].answers.push({ answer: "", correct: false, picked: false })
         setData(deepCopy)
     }
 
     // props.itemEdited(props.parentIndex, props.index, answerIndex, event)
 
-    const itemEdited = (mainIndex, parentIndex, answerIndex, event) => {
+    const itemEdited = (mainIndex, questionIndex, answerIndex, event) => {
         let deepCopy = JSON.parse(JSON.stringify(data))
-        deepCopy[mainIndex].questions[parentIndex].answers[answerIndex].answer = event.target.value;
+        deepCopy[mainIndex].questions[questionIndex].answers[answerIndex].answer = event.target.value;
+        setData(deepCopy)
+    }
+
+    const deleteItem = (examIndex, questionIndex, answerIndex) => {
+        let deepCopy = JSON.parse(JSON.stringify(data))
+        deepCopy[examIndex].questions[questionIndex].answers.splice(answerIndex, 1)
         setData(deepCopy)
     }
 
@@ -114,18 +122,20 @@ function App() {
                             onClick={() => changeQuestions(index)}>{bugs.bugs}</button>)
                         }
                     </div>
-                    {palautus === false && data[activeTest].questions.map((item, index) =>
+                    {palautus === false && data[activeTest].questions.map((item, questionIndex) =>
                         <div className="questions">
                             <input className="input" value={item.question}></input>
-                            {item.answers && <AddAnswers index={index}
-                                parentIndex={activeTest}
+                            {item.answers && <AddAnswers questionIndex={questionIndex}
+                                examIndex={activeTest}
                                 answers={item.answers}
                                 answerPicked={answerPicked}
-                                itemEdited={itemEdited} />}
+                                itemEdited={itemEdited}
+                                deleteItem={deleteItem} />}
                             <div className="buttonContainer">
-                                <button className="button3" onClick={() => addItem(activeTest, index)}>+</button>
+                                <button className="button3" onClick={() => addItem(activeTest, questionIndex)}>+</button>
                             </div>
                         </div>)}
+                    <button className="button" onClick={() => showAnswers(activeTest)}>Näytä vastaukset</button>
                 </div>
             </div>
         </div>

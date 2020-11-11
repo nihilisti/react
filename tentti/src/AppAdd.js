@@ -68,11 +68,11 @@ function App() {
         }
     }, [])
 
-    const buttonPressed = () => {
-        let newData = JSON.parse(JSON.stringify(data))
-        let finalData = data.concat(newData)
-        setData(finalData)
-    }
+    // const buttonPressed = () => {
+    //     let newData = JSON.parse(JSON.stringify(data))
+    //     let finalData = data.concat(newData)
+    //     setData(finalData)
+    // }
 
     const answerPicked = (examIndex, questionIndex, answerIndex, event) => {
         let deepCopy = JSON.parse(JSON.stringify(data))
@@ -135,7 +135,9 @@ function App() {
                                 <button className="button3" onClick={() => addItem(activeTest, questionIndex)}>+</button>
                             </div>
                         </div>)}
-                    <button className="button" onClick={() => showAnswers(activeTest)}>Näytä vastaukset</button>
+                    <div className="buttonContainer">
+                        <button className="button" onClick={() => showAnswers(activeTest)}>Näytä vastaukset</button>
+                    </div>
                 </div>
             </div>
         </div>

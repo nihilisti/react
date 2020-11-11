@@ -1,6 +1,7 @@
 import React from 'react';
 // import { useState } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function AddAnswers(props) {
 
@@ -32,7 +33,9 @@ function AddAnswers(props) {
                         className="input"
                         value={alkio.answer}>
                     </input>
-                    <button className="button3" onClick={(event) => handleDelete(answerIndex, event)}>-</button>
+                    <div className="icon">
+                        <DeleteIcon className="color" onClick={(event) => handleDelete(answerIndex, event)} />
+                    </div>
                 </div>)}
         </div>
     );

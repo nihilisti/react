@@ -1,102 +1,230 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import ChildList from './ChildList'
-// import './App.css';
+import React, { useEffect, useReducer, initialState } from 'react';
+import { useState } from 'react'
+import LapsiLista from './LapsiLista'
+import uuid from 'react-uuid'
+import axios from 'axios';
+import './App.css';
 
-function Objection() {
-
-    const [data, setData] = useState([])
-    const [dataAlustettu, setDataAlustettu] = useState(false)
-
-    const initialData = [
-        { lastName: 'Snow', firstName: 'Jon', age: 35 },
+const initialData =
+  [
+    {
+      uid: uuid(), etunimi: "Pekka", sukunimi: "Jakamo", ikä: 29, jälkikasvu: [
         {
-            lastName: 'Lannister', firstName: 'Cersei', age: 42,
-            children: [{
-                childName: "Joffrey",
-                childNames: [{ firstName: "Joffrey", middleName: "Idk" }]
-            },
-            { childName: "Tommen" }]
+          uid: uuid(), lapsenNimi: "Lissa", nimet: {
+            ensimmäinen_nimi: "Lissa", toinen_nimi: "Riitta"
+          }
         },
-        { lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    ];
-
-    useEffect(() => {
-
-        let jemma = window.localStorage;
-        let tempData = JSON.parse(jemma.getItem("data"))
-        if (tempData == null) {
-            jemma.setItem("data", JSON.stringify(initialData))
-            tempData = initialData
-        } else {
-            if (tempData.length === 0) {
-                jemma.setItem("data", JSON.stringify(initialData))
-                tempData = initialData
-            }
+        {
+          lapsenNimi: "Kaapo"
         }
-        setData(tempData);
-        setDataAlustettu(true)
+      ]
     },
-        [])
-
-    useEffect(() => {
-        if (dataAlustettu) {
-            window.localStorage.setItem("data", JSON.stringify(data))
-        }
-    }, [data])
-
-    const buttonPressed = () => {
-        let newData = JSON.parse(JSON.stringify(data))
-        let finalData = data.concat(newData)
-        setData(finalData)
+    {
+      uid: uuid(), etunimi: "Jarmo", sukunimi: "Jakamo", ikä: 49
     }
+  ]
 
-    const showChildren = (index) => {
-        if (data[index].children !== undefined) {
-            return data[index].children.map((alkio, childIndex) =>
-                <div key={childIndex}>
-                    <input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}>
-                    </input>
-                </div>)
+function reducer(state, action) {
+  let syväKopio = JSON.parse(JSON.stringify(state))
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
 
-        }
-    }
+    case "ETUNIMI_MUUTTUI":
+      syväKopio[action.data.ihminenIndex].etunimi = action.data.newText;
+      return syväKopio
 
-    // const showChildren = (index) => {
-    //     if (data[index].children !== undefined) {
-    //         return data[index].children.map((alkio, childIndex) => <div key={childIndex}><input onChange={(e) => { childNameChanged(e, index, childIndex) }} value={alkio.childName}></input></div>)
-    //     }
-    // }
+    case "SUKUNIMI_MUUTTUI":
+      syväKopio[action.data.ihminenIndex].sukunimi = action.data.newText;
+      return syväKopio
 
-    const childNameChanged = (event, parentIndex, childIndex) => {
-        let deepCopy = JSON.parse(JSON.stringify(data))
-        deepCopy[parentIndex].children[childIndex].childName = event.target.value;
-        setData(deepCopy)
-    }
+    case "IKA_MUUTTUI":
+      syväKopio[action.data.ihminenIndex].ikä = action.data.newText;
+      return syväKopio
 
-    const lastNameChanged = (event, index) => {
-        let deepCopy = JSON.parse(JSON.stringify(data))
-        deepCopy[index].lastName = event.target.value;
-        setData(deepCopy)
-    }
+    case 'IHMISEN_LISAYS':
+      let uusiHenkilö = { uid: uuid(), etunimi: "", sukunimi: "", ikä: 0 }
+      syväKopio.push(uusiHenkilö)
+      return syväKopio
 
-    return (
-        <div>
-            {data.map((item, index) => <div key={index}>
+    case 'IHMISEN_POISTO':
+      syväKopio.splice(action.data, 1)
+      return syväKopio
 
-                <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}>
-                </input> {item.firstName} {item.age}
-                {item.children ? <ChildList childNameChanged={childNameChanged} parentIndex={index} childList={item.children}></ChildList> : ""}
+    case "INIT_DATA":
+      return action.data
 
-                {/* <input onChange={(event) => lastNameChanged(event, index)} value={item.lastName}></input>
-                {item.firstName}
-                {item.age}
-                {item.children ? <ChildList childNameChanged={childNameChanged} parentIndex={index} childList={item.children} /> : ""}
-                <ChildList parentIndex={index} childList={item.children} /> */}
-            </div>)}
-            <button onClick={buttonPressed}>Press me</button>
-        </div>
-    );
+    default:
+      throw new Error();
+  }
 }
 
-export default Objection;
+function App() {
+  //array destructuring 
+  //let lapset = [{lapsenNimi:"Lissa"},{lapsenNimi:"Kaapo"}] 
+  //const [data, setData] = useState([])
+  const [dataAlustettu, setDataAlustettu] = useState(false)
+  const [state, dispatch] = useReducer(reducer, []);
+  //const [sukunimi, setSukunimi]=useState("")???
+
+  const [selected, setSelected] = useState([])
+
+  useEffect(() => {
+
+    const createData = async () => {
+
+      try {
+
+        let result = await axios.post("http://localhost:3005/ihmiset", initialData)
+        dispatch({ type: "INIT_DATA", data: initialData })
+        // setData(initialData)
+        setDataAlustettu(true)
+
+      } catch (exception) {
+        alert("Tietokannan alustaminen epäonnistui")
+      }
+    }
+
+    const fetchData = async () => {
+      try {
+        let result = await axios.get("http://localhost:3005/ihmiset")
+        if (result.data.length > 0) {
+          dispatch({ type: "INIT_DATA", data: result.data })
+          //          setData(result.data);
+          setDataAlustettu(true)
+        } else {
+          throw ("Nyt pitää data kyllä alustaa!")
+        }
+      }
+      catch (exception) {
+        createData();
+        console.log(exception)
+      }
+    }
+    fetchData();
+  }, [])
+  //SEH -> Structured Exception Handling
+  useEffect(() => {
+
+    const updateData = async () => {
+      try {
+        let result = await axios.put("http://localhost:3005/ihmiset", state)
+      } catch (exception) {
+        console.log("Datan päivitys ei onnistunut")
+      }
+      finally {
+
+      }
+    }/*  
+    axios.put("http://localhost:3005/ihmiset", data)
+    .then(function (response) {
+      // handle success
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    }); */
+
+    if (dataAlustettu) {
+      updateData();
+    }
+  }, [state])
+
+  //   if (dataAlustettu) {
+  //PUT
+  //     window.localStorage.setItem("data", JSON.stringify(data))
+  //   }
+  // }, [data])
+  //*/
+  /* 
+    const painikePainettu = () => {
+  
+      let uusdata = JSON.parse(JSON.stringify(data));
+      //    let uusdata = [...data];
+  
+      //   uusdata[0].jälkikasvu[0].lapsenNimi="Mikko"
+      // let uusdata = [...data];
+      let lopullinenData = data.concat(uusdata)
+      setData(lopullinenData)
+      //setRows([]);
+    } */
+
+  const näytäJälkikasvu = (index) => {
+    if (state[index].jälkikasvu !== undefined) {
+      return state[index].jälkikasvu.map((alkio, lapsenIndex) =>
+        <div key={alkio.uid}>
+          <input /* onChange={(e) => { lapsenNimiMuuttui(e, index, lapsenIndex) }} */ value={alkio.lapsenNimi}>
+          </input>
+        </div>)
+    }
+  }
+  /* const lapsenNimiMuuttui = (event, vanhemmanIndex, lapsenIndex) => {
+
+    let syväKopio = JSON.parse(JSON.stringify(data))
+    syväKopio[vanhemmanIndex].jälkikasvu[lapsenIndex].lapsenNimi = event.target.value;
+    setData(syväKopio)
+
+  }
+  const sukunimiMuuttui = (event, index) => {
+
+    let syväKopio = JSON.parse(JSON.stringify(data))
+    syväKopio[index].sukunimi = event.target.value;
+    setData(syväKopio)
+
+  } */
+  /* const etunimiMuuttui = (event, index) => {
+
+    let syväKopio = JSON.parse(JSON.stringify(data))
+    syväKopio[index].etunimi = event.target.value;
+    setData(syväKopio)
+
+  }
+ */
+  /*  const ikäMuuttui = (event, index) => {
+ 
+     let syväKopio = JSON.parse(JSON.stringify(data))
+     syväKopio[index].ikä = event.target.value;
+     setData(syväKopio)
+ 
+   }
+
+   const lisääHenkilö = () => {
+     let syväKopio = JSON.parse(JSON.stringify(data))
+     let uusiHenkilö = { uid: uuid(), etunimi: "", sukunimi: "", ikä: 0 }
+     syväKopio.push(uusiHenkilö)
+     setData(syväKopio)
+   }
+
+   const poistaHenkilö = (index) => {
+     let syväKopio = JSON.parse(JSON.stringify(data))
+     syväKopio.splice(index, 1)
+     setData(syväKopio)
+   } */
+
+  console.log(state);
+  return (<div>
+
+    {state.map((item, index) => <div key={item.uid}>
+      <input onChange={(event) => dispatch({ type: "ETUNIMI_MUUTTUI", data: { newText: event.target.value, ihminenIndex: index } })}
+        value={item.etunimi}>
+      </input>
+      <input onChange={(event) => dispatch({ type: "SUKUNIMI_MUUTTUI", data: { newText: event.target.value, ihminenIndex: index } })}
+        value={item.sukunimi}>
+      </input>
+      <input onChange={(event) => dispatch({ type: "IKA_MUUTTUI", data: { newText: event.target.value, ihminenIndex: index } })}
+        value={item.ikä}>
+      </input>
+      <button onClick={() => dispatch({ type: "IHMISEN_POISTO", data: index })}>Poista henkilö</button>
+      {item.jälkikasvu ? <LapsiLista dispatch={dispatch} parentIndex={index} lapsiLista={item.jälkikasvu}></LapsiLista> : ""}
+    </div>)}
+
+    <button onClick={() => dispatch({ type: "IHMISEN_LISAYS" })}>Lisää henkilö</button>
+  </div>
+  );
+}
+
+export default App;

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import ObjectTehtava from './ObjectTehtava';
 import Objection from './Object';
+// import HuutoNet from './HuutoNet';
 // import App from './App';
 // import Map from './Map';
 // import DataGrid from './GridDemo'

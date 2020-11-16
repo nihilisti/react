@@ -5,8 +5,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 function AddAnswers(props) {
 
-    // const [checked, setChecked] = React.useState(true);
-
     const handleChange = (answerIndex, event) => {
         props.answerPicked(props.examIndex, props.questionIndex, answerIndex, event)
     };
@@ -15,8 +13,8 @@ function AddAnswers(props) {
         props.itemEdited(props.examIndex, props.questionIndex, answerIndex, event)
     };
 
-    const handleDelete = (answerIndex, event) => {
-        props.deleteItem(props.examIndex, props.questionIndex, answerIndex, event)
+    const handleDelete = (answerIndex) => {
+        props.deleteItem(props.examIndex, props.questionIndex, answerIndex)
     };
 
     return (
@@ -34,7 +32,7 @@ function AddAnswers(props) {
                         value={alkio.answer}>
                     </input>
                     <div className="icon">
-                        <DeleteIcon className="color" onClick={(event) => handleDelete(answerIndex, event)} />
+                        <DeleteIcon className="color" onClick={() => handleDelete(answerIndex)} />
                     </div>
                 </div>)}
         </div>

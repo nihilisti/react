@@ -3,9 +3,8 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Nav from './TenttiNav';
 import AnswerList from './AnswerList';
-import uuid from 'react-uuid'
+import uuid from 'react-uuid';
 import axios from 'axios';
-import Chart from 'chart.js';
 
 const initialData =
   [
@@ -79,50 +78,6 @@ function reducer(state, action) {
     default:
       throw new Error();
   }
-}
-
-function MyChart() {
-  useEffect(() => {
-    const ctx = document.getElementById("myChart");
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["IT", "Biologia", "Fysiikka", "Kemia", "Matematiikka", "IT 2"],
-        datasets: [
-          {
-            label: "Testi",
-            data: [3, 3, 4, 3, 2, 1],
-            backgroundColor: [
-              "#8de4eb",
-              "#8dc4eb",
-              "#8d9aeb",
-              "#a18deb",
-              "#c28deb",
-              "#d48deb"
-            ],
-          }
-        ]
-      },
-      options: {
-        responsive: false,
-        // maintainAspectRatio: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-
-    });
-  });
-
-  return (
-    <div className="App">
-      <canvas id="myChart" width="400" height="400" />
-    </div>
-  );
 }
 
 function App() {
@@ -207,7 +162,7 @@ function App() {
         }
       }
       catch (exception) {
-        createData();
+        // createData();
         console.log(exception)
       }
     }
@@ -263,15 +218,10 @@ function App() {
   const changeQuestions = (index) => {
     setActiveQuestions(index)
   }
-
-  return (
-    <MyChart></MyChart>
-  )
-
+  
   return (
     <div>
       <Nav />
-      <MyChart />
       <div className="main">
         <div className="mainContainer">
           <div className="buttonContainer">
@@ -281,7 +231,7 @@ function App() {
               onClick={() => changeQuestions(index)}>{bugs.bugs}</button>)
             }
           </div>
-          {palautus === false && state[activeQuestions].questions.map((item, index) =>
+          {palautus === false && state[activeQuestions] && state[activeQuestions].questions.map((item, index) =>
             <div className="questions">
               <div className="questionTitle" >
                 {item.question}

@@ -6,52 +6,52 @@ import AnswerList from './AnswerList';
 import uuid from 'react-uuid';
 import axios from 'axios';
 
-const initialData =
-  [
-    {
-      bugs: "Hyönteiset", questions: [
-        {
-          question: 'Mikä on Vespula vulgaris?',
-          answers: [
-            { uid: uuid(), answer: "Piha-ampiainen", correct: true, picked: false },
-            { uid: uuid(), answer: "Isopihtihäntä", correct: false, picked: false },
-            { uid: uuid(), answer: "Suursukeltaja", correct: false, picked: false },
-            { uid: uuid(), answer: "Sarvikuonokas", correct: false, picked: false },
-          ]
-        },
-        {
-          question: 'Mikä on Hymenopus coronatus?',
-          answers: [
-            { uid: uuid(), answer: "Ritariperhonen", correct: false, picked: false },
-            { uid: uuid(), answer: "Orkidearukoilijasirkka", correct: true, picked: false },
-            { uid: uuid(), answer: "Kultaheinäsirkka", correct: false, picked: false },
-            { uid: uuid(), answer: "Täpläpaarma", correct: false, picked: false },
-          ]
-        },
-      ]
-    },
-    {
-      bugs: "Hämähäkkieläimet", questions: [
-        {
-          question: 'Mikä on Mitopus morio?',
-          answers: [
-            { answer: "Täplälukki", correct: false, picked: false },
-            { answer: "Seinälukki", correct: false, picked: false },
-            { answer: "Keisarilukki", correct: false, picked: false },
-            { answer: "Metsälukki", correct: true, picked: false },
-          ]
-        },
-        {
-          question: 'Mikä on Pandinus imperator?',
-          answers: [
-            { answer: "Keisariskorpioni", correct: true, picked: false },
-            { answer: "Kenttäskorpioni", correct: false, picked: false },
-            { answer: "Brontoscorpio (ukkosskorpioni)", correct: false, picked: false },
-          ]
-        }
-      ]
-    }
-  ]
+// const initialData =
+//   [
+//     {
+//       bugs: "Hyönteiset", questions: [
+//         {
+//           question: 'Mikä on Vespula vulgaris?',
+//           answers: [
+//             { uid: uuid(), answer: "Piha-ampiainen", correct: true, picked: false },
+//             { uid: uuid(), answer: "Isopihtihäntä", correct: false, picked: false },
+//             { uid: uuid(), answer: "Suursukeltaja", correct: false, picked: false },
+//             { uid: uuid(), answer: "Sarvikuonokas", correct: false, picked: false },
+//           ]
+//         },
+//         {
+//           question: 'Mikä on Hymenopus coronatus?',
+//           answers: [
+//             { uid: uuid(), answer: "Ritariperhonen", correct: false, picked: false },
+//             { uid: uuid(), answer: "Orkidearukoilijasirkka", correct: true, picked: false },
+//             { uid: uuid(), answer: "Kultaheinäsirkka", correct: false, picked: false },
+//             { uid: uuid(), answer: "Täpläpaarma", correct: false, picked: false },
+//           ]
+//         },
+//       ]
+//     },
+//     {
+//       bugs: "Hämähäkkieläimet", questions: [
+//         {
+//           question: 'Mikä on Mitopus morio?',
+//           answers: [
+//             { answer: "Täplälukki", correct: false, picked: false },
+//             { answer: "Seinälukki", correct: false, picked: false },
+//             { answer: "Keisarilukki", correct: false, picked: false },
+//             { answer: "Metsälukki", correct: true, picked: false },
+//           ]
+//         },
+//         {
+//           question: 'Mikä on Pandinus imperator?',
+//           answers: [
+//             { answer: "Keisariskorpioni", correct: true, picked: false },
+//             { answer: "Kenttäskorpioni", correct: false, picked: false },
+//             { answer: "Brontoscorpio (ukkosskorpioni)", correct: false, picked: false },
+//           ]
+//         }
+//       ]
+//     }
+//   ]
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -82,52 +82,6 @@ function reducer(state, action) {
 
 function App() {
 
-  // const [data, setData] = useState([
-  //   {
-  //     bugs: "Hyönteiset", questions: [
-  //       {
-  //         question: 'Mikä on Vespula vulgaris?',
-  //         answers: [
-  //           { answer: "Piha-ampiainen", correct: true, picked: false },
-  //           { answer: "Isopihtihäntä", correct: false, picked: false },
-  //           { answer: "Suursukeltaja", correct: false, picked: false },
-  //           { answer: "Sarvikuonokas", correct: false, picked: false },
-  //         ]
-  //       },
-  //       {
-  //         question: 'Mikä on Hymenopus coronatus?',
-  //         answers: [
-  //           { answer: "Ritariperhonen", correct: false, picked: false },
-  //           { answer: "Orkidearukoilijasirkka", correct: true, picked: false },
-  //           { answer: "Kultaheinäsirkka", correct: false, picked: false },
-  //           { answer: "Täpläpaarma", correct: false, picked: false },
-  //         ]
-  //       },
-  //     ]
-  //   },
-  //   {
-  //     bugs: "Hämähäkkieläimet", questions: [
-  //       {
-  //         question: 'Mikä on Mitopus morio?',
-  //         answers: [
-  //           { answer: "Täplälukki", correct: false, picked: false },
-  //           { answer: "Seinälukki", correct: false, picked: false },
-  //           { answer: "Keisarilukki", correct: false, picked: false },
-  //           { answer: "Metsälukki", correct: true, picked: false },
-  //         ]
-  //       },
-  //       {
-  //         question: 'Mikä on Pandinus imperator?',
-  //         answers: [
-  //           { answer: "Keisariskorpioni", correct: true, picked: false },
-  //           { answer: "Kenttäskorpioni", correct: false, picked: false },
-  //           { answer: "Brontoscorpio (ukkosskorpioni)", correct: false, picked: false },
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ])
-
   const [palautus, setPalautus] = useState(false)
   const [dataAlustettu, setDataAlustettu] = useState(false)
   const [activeQuestions, setActiveQuestions] = useState(0)
@@ -136,24 +90,25 @@ function App() {
 
   useEffect(() => {
 
-    const createData = async () => {
+    // const createData = async () => {
 
-      try {
+    //   try {
 
-        let result = await axios.post("http://localhost:3005/bugs", initialData)
-        dispatch({ type: "INIT_DATA", data: initialData })
-        // setData(initialData)
-        setDataAlustettu(true)
+    //     let result = await axios.post("http://localhost:3005/bugs", initialData)
+    //     dispatch({ type: "INIT_DATA", data: initialData })
+    //     // setData(initialData)
+    //     setDataAlustettu(true)
 
-      } catch (exception) {
-        alert("Tietokannan alustaminen epäonnistui")
-      }
-    }
+    //   } catch (exception) {
+    //     alert("Tietokannan alustaminen epäonnistui")
+    //   }
+    // }
 
     const fetchData = async () => {
       try {
-        let result = await axios.get("http://localhost:3005/bugs")
+        let result = await axios.get("http://localhost:5000/tentit")
         if (result.data.length > 0) {
+          
           dispatch({ type: "INIT_DATA", data: result.data })
           //          setData(result.data);
           setDataAlustettu(true)
@@ -170,23 +125,23 @@ function App() {
   }, [])
 
   //SEH -> Structured Exception Handling
-  useEffect(() => {
+  // useEffect(() => {
 
-    const updateData = async () => {
-      try {
-        let result = await axios.put("http://localhost:3005/bugs", state)
-      } catch (exception) {
-        console.log("Datan päivitys ei onnistunut")
-      }
-      finally {
+  //   const updateData = async () => {
+  //     try {
+  //       let result = await axios.put("http://localhost:3005/bugs", state)
+  //     } catch (exception) {
+  //       console.log("Datan päivitys ei onnistunut")
+  //     }
+  //     finally {
 
-      }
-    }
+  //     }
+  //   }
 
-    if (dataAlustettu) {
-      updateData();
-    }
-  }, [state])
+  //   if (dataAlustettu) {
+  //     updateData();
+  //   }
+  // }, [state])
 
   // useEffect(() => {
   //   let jemma = window.localStorage;
@@ -211,12 +166,16 @@ function App() {
   //   setData(deepCopy)
   // }
 
-  const showAnswers = (item) => {
-    setPalautus(true)
-  }
+  // const showAnswers = (item) => {
+  //   setPalautus(true)
+  // }
 
-  const changeQuestions = (index) => {
-    setActiveQuestions(index)
+  // const changeQuestions = (index) => {
+  //   setActiveQuestions(index)
+  // }
+
+  const changeExam = (index) => {
+    setShowExam(index)
   }
   
   return (
@@ -225,19 +184,19 @@ function App() {
       <div className="main">
         <div className="mainContainer">
           <div className="buttonContainer">
-            {state.map((bugs, index) => <button
+            {state.map((tentit, index) => <button
               key={index}
               className="button2"
-              onClick={() => changeQuestions(index)}>{bugs.bugs}</button>)
+              onClick={() => changeExam(index)}>{tentit.nimi}</button>)
             }
           </div>
-          {palautus === false && state[activeQuestions] && state[activeQuestions].questions.map((item, index) =>
+          {/* {palautus === false && state[activeQuestions] && state[activeQuestions].questions.map((item, index) =>
             <div className="questions">
               <div className="questionTitle" >
                 {item.question}
               </div>
               {item.answers && <AnswerList index={index} parentIndex={activeQuestions} answers={item.answers} />}
-            </div>)}
+            </div>)} */}
         </div>
       </div>
       <button className="button">Näytä vastaukset</button>

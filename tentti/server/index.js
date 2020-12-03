@@ -11,7 +11,17 @@ const db = require('./db')
 
 // tentit
 
-// hae tentti
+// hae kaikki tentit
+app.get('/tentit', (req, res, next) => {
+  db.query('SELECT * FROM tentti', (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
+
+// hae tietty tentti
 app.get('/tentti/:id', (req, res, next) => {
   db.query('SELECT * FROM tentti WHERE id = $1', [req.params.id], (err, result) => {
     if (err) {
@@ -63,6 +73,16 @@ app.delete('/poistatentti/:id', (req, res, next) => {
 
 // kysymykset
 
+// hae kaikki kysymykset
+app.get('/kysymykset', (req, res, next) => {
+  db.query('SELECT * FROM kysymys', (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
+
 // hae kysymys
 app.get('/kysymys/:id', (req, res, next) => {
   db.query('SELECT * FROM kysymys WHERE id = $1', [req.params.id], (err, result) => {
@@ -75,7 +95,7 @@ app.get('/kysymys/:id', (req, res, next) => {
 
 // lisää uusi kysymys
 app.post('/lisaakysymys/:nimi/:numero', (req, res, next) => {      
-  db.query('INSERT INTO kysymys (nimi, numero) VALUES ($1, $2)', [req.params.nimi, req.params.numero], (err, result) => {
+  db.query('INSERT INTO kysymys (nimi, numero) VALUES ($1, $2) RETURNING id', [req.params.nimi, req.params.numero], (err, result) => {
     if (err) {
       return next(err)
     }
@@ -114,6 +134,16 @@ app.delete('/poistakysymys/:id', (req, res, next) => {
 })
 
 // vaihtoehdot
+
+// hae kaikki vaihtoehdot
+app.get('/vaihtoehdot', (req, res, next) => {
+  db.query('SELECT * FROM vaihtoehto', (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
 
 // // lisää uusi vaihtoehto
 app.post('/lisaavaihtoehto/:numero/:nimi/:oikea', (req, res, next) => {      

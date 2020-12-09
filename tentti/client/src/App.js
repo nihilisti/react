@@ -6,53 +6,6 @@ import AnswerList from './AnswerList';
 import uuid from 'react-uuid';
 import axios from 'axios';
 
-// const initialData =
-//   [
-//     {
-//       bugs: "Hyönteiset", questions: [
-//         {
-//           question: 'Mikä on Vespula vulgaris?',
-//           answers: [
-//             { uid: uuid(), answer: "Piha-ampiainen", correct: true, picked: false },
-//             { uid: uuid(), answer: "Isopihtihäntä", correct: false, picked: false },
-//             { uid: uuid(), answer: "Suursukeltaja", correct: false, picked: false },
-//             { uid: uuid(), answer: "Sarvikuonokas", correct: false, picked: false },
-//           ]
-//         },
-//         {
-//           question: 'Mikä on Hymenopus coronatus?',
-//           answers: [
-//             { uid: uuid(), answer: "Ritariperhonen", correct: false, picked: false },
-//             { uid: uuid(), answer: "Orkidearukoilijasirkka", correct: true, picked: false },
-//             { uid: uuid(), answer: "Kultaheinäsirkka", correct: false, picked: false },
-//             { uid: uuid(), answer: "Täpläpaarma", correct: false, picked: false },
-//           ]
-//         },
-//       ]
-//     },
-//     {
-//       bugs: "Hämähäkkieläimet", questions: [
-//         {
-//           question: 'Mikä on Mitopus morio?',
-//           answers: [
-//             { answer: "Täplälukki", correct: false, picked: false },
-//             { answer: "Seinälukki", correct: false, picked: false },
-//             { answer: "Keisarilukki", correct: false, picked: false },
-//             { answer: "Metsälukki", correct: true, picked: false },
-//           ]
-//         },
-//         {
-//           question: 'Mikä on Pandinus imperator?',
-//           answers: [
-//             { answer: "Keisariskorpioni", correct: true, picked: false },
-//             { answer: "Kenttäskorpioni", correct: false, picked: false },
-//             { answer: "Brontoscorpio (ukkosskorpioni)", correct: false, picked: false },
-//           ]
-//         }
-//       ]
-//     }
-//   ]
-
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
   switch (action.type) {
@@ -84,9 +37,12 @@ function App() {
 
   const [palautus, setPalautus] = useState(false)
   const [dataAlustettu, setDataAlustettu] = useState(false)
-  const [activeQuestions, setActiveQuestions] = useState(0)
+  const [activeQuestions, setActiveQuestions] = useState([])
   const [showExam, setShowExam] = useState(0)
   const [state, dispatch] = useReducer(reducer, []);
+
+  const [data2, setData2] = useState([])
+  const [dataAlustettu2, setDataAlustettu2] = useState(false)
 
   useEffect(() => {
 
@@ -94,7 +50,7 @@ function App() {
 
     //   try {
 
-    //     let result = await axios.post("http://localhost:3005/bugs", initialData)
+    //     let result = await axios.post("http://localhost:3005/tentit", initialData)
     //     dispatch({ type: "INIT_DATA", data: initialData })
     //     // setData(initialData)
     //     setDataAlustettu(true)
@@ -107,11 +63,27 @@ function App() {
     const fetchData = async () => {
       try {
         let result = await axios.get("http://localhost:5000/tentit")
+
         if (result.data.length > 0) {
-          
+          for (var i = 0; i < result.data.length; i++) {
+            result.data[i].kysymykset = []
+            let kysymykset = await axios.get("http://localhost:5000/tenttikysymykset/" + result.data[i].id)
+            result.data[i].kysymykset = kysymykset.data
+            console.log('kysymykset.data', kysymykset.data)
+
+            // if (result.data[i].kysely.length > 0){
+            //   for (var j = 0; j < result.data[i].kysely.length; j++){
+            //     result.data[i].kysely[j].vastaukset = []
+            //     let vaihtoehdot  = await axios.get("http://localhost:5000/vaihtoehdot/" + result.data[i].kysely[j].kysymys_id)
+            //     result.data[i].kysely[j].vaihtoehdot = vaihtoehdot.data
+            //   }
+            // }
+          }
+
+          setData2(result.data);
+          setDataAlustettu2(true);
+
           dispatch({ type: "INIT_DATA", data: result.data })
-          //          setData(result.data);
-          setDataAlustettu(true)
         } else {
           throw ("Nyt pitää data kyllä alustaa!")
         }
@@ -177,26 +149,31 @@ function App() {
   const changeExam = (index) => {
     setShowExam(index)
   }
-  
+
+  console.log('data2', data2)
+
+  if (data2.length < 1)
+    return <>loading...</>
+
   return (
     <div>
       <Nav />
       <div className="main">
         <div className="mainContainer">
           <div className="buttonContainer">
-            {state.map((tentit, index) => <button
+            {data2.map((tentit, index) => <button
               key={index}
               className="button2"
               onClick={() => changeExam(index)}>{tentit.nimi}</button>)
             }
           </div>
-          {/* {palautus === false && state[activeQuestions] && state[activeQuestions].questions.map((item, index) =>
+          {palautus === false && state[activeQuestions] && state[activeQuestions].kysymykset.map((kysymykset, index) =>
             <div className="questions">
-              <div className="questionTitle" >
-                {item.question}
+              <div className="questionTitle" key={index}>
+                {kysymykset.nimi}
               </div>
-              {item.answers && <AnswerList index={index} parentIndex={activeQuestions} answers={item.answers} />}
-            </div>)} */}
+              {/* {vaihtoehdot.nimi && <AnswerList index={index} parentIndex={activeQuestions} answers={vaihtoehdot.nimi} />} */}
+            </div>)}
         </div>
       </div>
       <button className="button">Näytä vastaukset</button>

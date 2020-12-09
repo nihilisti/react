@@ -5,9 +5,37 @@ var app = express()
 module.exports = app
 var port = process.env.PORT || 5000
 app.use(bodyParser.json())
-app.use(cors())
+
+app.use('/kello', function (req, res, next) {
+  console.log('Kello on:', Date.now())
+  next()
+})
 
 const db = require('./db')
+
+var corsOptions = {
+  origin: 'http://localhost:3000'
+}
+
+app.use(cors(corsOptions))
+
+app.get('/tiedot', (req, res, next) => {
+  db.query('SELECT tenttitulokset.tulos, opiskelija.etunimi, opiskelija.sukunimi FROM tenttitulokset INNER JOIN opiskelija ON opiskelija.op_id = tenttitulokset.op_id', (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
+
+app.get('/keskiarvo/:op_id', (req, res, next) => {
+  db.query('SELECT AVG(tenttitulokset.tulos) FROM tenttitulokset WHERE op_id = $1', [req.params.op_id], (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
 
 // tentit
 
@@ -90,6 +118,16 @@ app.get('/kysymys/:id', (req, res, next) => {
       return next(err)
     }
     res.send(result.rows[0])
+  })
+})
+
+// hae kysymys tentin perusteella
+app.get('/tenttikysymykset/:tentti_id', (req, res, next) => {
+  db.query('SELECT * FROM kysymys WHERE tentti_id = $1', [req.params.tentti_id], (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
   })
 })
 

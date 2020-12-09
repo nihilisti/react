@@ -103,6 +103,7 @@ function App() {
     }
     fetchData();
   }, [])
+  
   //SEH -> Structured Exception Handling
   useEffect(() => {
 

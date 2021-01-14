@@ -4,11 +4,12 @@ import './index.css';
 import App from './App';
 import AppAdd from './AppAdd';
 import reportWebVitals from './reportWebVitals';
+import { IntlProvider } from "react-intl";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <IntlProvider locale='en'>
     <App />
-  </React.StrictMode>,
+  </IntlProvider>,
   document.getElementById('root')
 );
 

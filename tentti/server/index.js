@@ -28,6 +28,19 @@ app.get('/tiedot', (req, res, next) => {
   })
 })
 
+app.get('/tulokset', (req, res, next) => {
+  db.query('SELECT DISTINCT op_id FROM tenttitulokset', (err, result) => {
+    if (err) {
+      return next(err)
+    }
+    res.send(result.rows)
+  })
+})
+
+// for (var x = 0; lista.length > x; x++) {
+
+// }
+
 app.get('/keskiarvo/:op_id', (req, res, next) => {
   db.query('SELECT AVG(tenttitulokset.tulos) FROM tenttitulokset WHERE op_id = $1', [req.params.op_id], (err, result) => {
     if (err) {

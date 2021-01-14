@@ -5,6 +5,16 @@ import Nav from './TenttiNav';
 import AnswerList from './AnswerList';
 import uuid from 'react-uuid';
 import axios from 'axios';
+import { IntlProvider, FormattedMessage, FormattedDate } from 'react-intl';
+
+const messages = {
+  en: {
+    heading: 'Welcome'
+  },
+  fi: {
+    heading: 'Tervetuloa'
+  },
+}
 
 function reducer(state, action) {
   let deepCopy = JSON.parse(JSON.stringify(state))
@@ -33,7 +43,7 @@ function reducer(state, action) {
   }
 }
 
-function App() {
+function App(props) {
 
   const [palautus, setPalautus] = useState(false)
   const [dataAlustettu, setDataAlustettu] = useState(false)
@@ -43,6 +53,8 @@ function App() {
 
   const [data2, setData2] = useState([])
   const [dataAlustettu2, setDataAlustettu2] = useState(false)
+
+  const [locale, setLocale] = useState('en')
 
   useEffect(() => {
 
@@ -69,7 +81,6 @@ function App() {
             result.data[i].kysymykset = []
             let kysymykset = await axios.get("http://localhost:5000/tenttikysymykset/" + result.data[i].id)
             result.data[i].kysymykset = kysymykset.data
-            console.log('kysymykset.data', kysymykset.data)
 
             // if (result.data[i].kysely.length > 0){
             //   for (var j = 0; j < result.data[i].kysely.length; j++){
@@ -80,8 +91,8 @@ function App() {
             // }
           }
 
-          setData2(result.data);
-          setDataAlustettu2(true);
+          setData2(result.data)
+          setDataAlustettu2(true)
 
           dispatch({ type: "INIT_DATA", data: result.data })
         } else {
@@ -147,10 +158,12 @@ function App() {
   // }
 
   const changeExam = (index) => {
-    setShowExam(index)
+    setActiveQuestions(index)
   }
 
-  console.log('data2', data2)
+  const handleChange = (e) => {
+    setLocale(e.target.value)
+  }
 
   if (data2.length < 1)
     return <>loading...</>
@@ -158,11 +171,26 @@ function App() {
   return (
     <div>
       <Nav />
+      <p></p>
       <div className="main">
+        <div className="welcome">
+          <IntlProvider locale={locale} messages={messages[locale]} >
+            <div className="item">
+              <FormattedMessage id="heading"
+                defaultMessage="Tervetuloa"
+                value={{ locale }}>
+              </FormattedMessage>
+            </div>
+            <div className="item">
+              <FormattedDate year="numeric" month="long" day="numeric" weekday="long" value={props.date}></FormattedDate>
+            </div>
+          </IntlProvider>
+        </div>
         <div className="mainContainer">
           <div className="buttonContainer">
             {data2.map((tentit, index) => <button
               key={index}
+              name={"TenttiButton"}
               className="button2"
               onClick={() => changeExam(index)}>{tentit.nimi}</button>)
             }
@@ -175,8 +203,14 @@ function App() {
               {/* {vaihtoehdot.nimi && <AnswerList index={index} parentIndex={activeQuestions} answers={vaihtoehdot.nimi} />} */}
             </div>)}
         </div>
+        <button className="button">Näytä vastaukset</button>
+        <p></p>
+        <select onChange={handleChange} defaultValue={locale}>
+          {['fin', 'en'].map((x) => (
+            <option key={x}>{x}</option>
+          ))}
+        </select>
       </div>
-      <button className="button">Näytä vastaukset</button>
     </div>
   );
 }

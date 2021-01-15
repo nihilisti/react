@@ -6,6 +6,7 @@ import AnswerList from './AnswerList';
 import uuid from 'react-uuid';
 import axios from 'axios';
 import { IntlProvider, FormattedMessage, FormattedDate } from 'react-intl';
+import Dropzone from 'react-dropzone'
 
 const messages = {
   en: {
@@ -171,21 +172,27 @@ function App(props) {
   return (
     <div>
       <Nav />
-      <p></p>
+      <div className="welcome">
+        <IntlProvider locale={locale} messages={messages[locale]} >
+          <div className="item">
+            <FormattedMessage id="heading"
+              defaultMessage="Tervetuloa"
+              value={{ locale }}>
+            </FormattedMessage>
+          </div>
+          <div className="item">
+            <FormattedDate year="numeric" month="long" day="numeric" weekday="long" value={props.date}></FormattedDate>
+          </div>
+          <div className="item">
+            <select onChange={handleChange} defaultValue={locale}>
+              {['fin', 'en'].map((x) => (
+                <option key={x}>{x}</option>
+              ))}
+            </select>
+          </div>
+        </IntlProvider>
+      </div>
       <div className="main">
-        <div className="welcome">
-          <IntlProvider locale={locale} messages={messages[locale]} >
-            <div className="item">
-              <FormattedMessage id="heading"
-                defaultMessage="Tervetuloa"
-                value={{ locale }}>
-              </FormattedMessage>
-            </div>
-            <div className="item">
-              <FormattedDate year="numeric" month="long" day="numeric" weekday="long" value={props.date}></FormattedDate>
-            </div>
-          </IntlProvider>
-        </div>
         <div className="mainContainer">
           <div className="buttonContainer">
             {data2.map((tentit, index) => <button
@@ -204,12 +211,16 @@ function App(props) {
             </div>)}
         </div>
         <button className="button">Näytä vastaukset</button>
-        <p></p>
-        <select onChange={handleChange} defaultValue={locale}>
-          {['fin', 'en'].map((x) => (
-            <option key={x}>{x}</option>
-          ))}
-        </select>
+        <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div className="drop" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+              </div>
+            </section>
+          )}
+        </Dropzone>
       </div>
     </div>
   );

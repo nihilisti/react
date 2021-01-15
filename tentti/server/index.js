@@ -73,7 +73,7 @@ app.get('/tentti/:id', (req, res, next) => {
 })
 
 // lisää uusi tentti
-app.post('/lisaatentti/:nimi/:ajankohta', (req, res, next) => {      
+app.post('/lisaatentti/:nimi/:ajankohta', (req, res, next) => {
   db.query('INSERT INTO tentti (nimi, ajankohta) VALUES ($1, $2)', [req.params.nimi, req.params.ajankohta], (err, result) => {
     if (err) {
       return next(err)
@@ -83,7 +83,7 @@ app.post('/lisaatentti/:nimi/:ajankohta', (req, res, next) => {
 })
 
 // muokkaa tentin ajankohtaa
-app.put('/muokkaatenttia/:ajankohta/:id', (req, res, next) => {      
+app.put('/muokkaatenttia/:ajankohta/:id', (req, res, next) => {
   db.query('UPDATE tentti SET ajankohta = $1 WHERE "id" = $2', [req.params.ajankohta, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -93,7 +93,7 @@ app.put('/muokkaatenttia/:ajankohta/:id', (req, res, next) => {
 })
 
 // muokkaa tentin nimeä
-app.put('/muokkaatenttia2/:nimi/:id', (req, res, next) => {      
+app.put('/muokkaatenttia2/:nimi/:id', (req, res, next) => {
   db.query('UPDATE tentti SET nimi = $1 WHERE "id" = $2', [req.params.nimi, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -103,7 +103,7 @@ app.put('/muokkaatenttia2/:nimi/:id', (req, res, next) => {
 })
 
 // poista tentti
-app.delete('/poistatentti/:id', (req, res, next) => {      
+app.delete('/poistatentti/:id', (req, res, next) => {
   db.query('DELETE FROM tentti WHERE "id" = $1', [req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -145,7 +145,7 @@ app.get('/tenttikysymykset/:tentti_id', (req, res, next) => {
 })
 
 // lisää uusi kysymys
-app.post('/lisaakysymys/:nimi/:numero', (req, res, next) => {      
+app.post('/lisaakysymys/:nimi/:numero', (req, res, next) => {
   db.query('INSERT INTO kysymys (nimi, numero) VALUES ($1, $2) RETURNING id', [req.params.nimi, req.params.numero], (err, result) => {
     if (err) {
       return next(err)
@@ -155,7 +155,7 @@ app.post('/lisaakysymys/:nimi/:numero', (req, res, next) => {
 })
 
 // muokkaa kysymystä
-app.put('/muokkaakysymysta/:nimi/:id', (req, res, next) => {      
+app.put('/muokkaakysymysta/:nimi/:id', (req, res, next) => {
   db.query('UPDATE kysymys SET nimi = $1 WHERE "id" = $2', [req.params.nimi, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -165,7 +165,7 @@ app.put('/muokkaakysymysta/:nimi/:id', (req, res, next) => {
 })
 
 // muokkaa kysymyksen numeroa
-app.put('/muokkaakysymysta2/:numero/:id', (req, res, next) => {      
+app.put('/muokkaakysymysta2/:numero/:id', (req, res, next) => {
   db.query('UPDATE kysymys SET numero = $1 WHERE "id" = $2', [req.params.numero, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -175,7 +175,7 @@ app.put('/muokkaakysymysta2/:numero/:id', (req, res, next) => {
 })
 
 // poista kysymys
-app.delete('/poistakysymys/:id', (req, res, next) => {      
+app.delete('/poistakysymys/:id', (req, res, next) => {
   db.query('DELETE FROM kysymys WHERE "id" = $1', [req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -197,7 +197,7 @@ app.get('/vaihtoehdot', (req, res, next) => {
 })
 
 // // lisää uusi vaihtoehto
-app.post('/lisaavaihtoehto/:numero/:nimi/:oikea', (req, res, next) => {      
+app.post('/lisaavaihtoehto/:numero/:nimi/:oikea', (req, res, next) => {
   db.query('INSERT INTO vaihtoehto (numero, nimi, oikea) VALUES ($1, $2, $3)', [req.params.numero, req.params.nimi, req.params.oikea], (err, result) => {
     if (err) {
       return next(err)
@@ -207,7 +207,7 @@ app.post('/lisaavaihtoehto/:numero/:nimi/:oikea', (req, res, next) => {
 })
 
 // muokkaa vaihtoehdon nimeä
-app.put('/muokkaavaihtoehtoa/:nimi/:id', (req, res, next) => {      
+app.put('/muokkaavaihtoehtoa/:nimi/:id', (req, res, next) => {
   db.query('UPDATE vaihtoehto SET nimi = $1 WHERE "id" = $2', [req.params.nimi, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -217,7 +217,7 @@ app.put('/muokkaavaihtoehtoa/:nimi/:id', (req, res, next) => {
 })
 
 // muokkaa vaihtoehdon numeroa
-app.put('/muokkaavaihtoehtoa2/:numero/:id', (req, res, next) => {      
+app.put('/muokkaavaihtoehtoa2/:numero/:id', (req, res, next) => {
   db.query('UPDATE vaihtoehto SET numero = $1 WHERE "id" = $2', [req.params.numero, req.params.id], (err, result) => {
     if (err) {
       return next(err)
@@ -227,7 +227,7 @@ app.put('/muokkaavaihtoehtoa2/:numero/:id', (req, res, next) => {
 })
 
 // poista vaihtoehto
-app.delete('/poistavaihtoehto/:id', (req, res, next) => {      
+app.delete('/poistavaihtoehto/:id', (req, res, next) => {
   db.query('DELETE FROM vaihtoehto WHERE "id" = $1', [req.params.id], (err, result) => {
     if (err) {
       return next(err)

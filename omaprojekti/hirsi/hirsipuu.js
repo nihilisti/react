@@ -16,25 +16,28 @@ let voititko = 0
 
 // letterCheck(word, guessed, correctWord)
 
-function kirjainTaiAlaviiva(kirjain, arvattuKirjain) {
-    if (kirjain === arvattuKirjain) {
-        return kirjain
-    } else {
-        return '_'
-    }
-}
+// function kirjainTaiAlaviiva(kirjain, arvattuKirjain) {
+//     if (kirjain === arvattuKirjain) {
+//         return kirjain
+//     } else {
+//         return '_'
+//     }
+// }
 
 // käydään arvatut kirjaimet läpi ja verrataan niitä arvattavan sanan kirjaimiin
 // esim. jos sana on 'jee' ja arvatut kirjaimet 'joo', niin palautetaan 'j _ _'
 function kirjainCheck (sana, arvatutKirjaimet) {
     let tulos = []
     for (let i = 0; i < sana.length; i++) {
-        tulos.push(kirjainTaiAlaviiva(sana[i], arvatutKirjaimet[i]))
-    }
-    return tulos
+        tulos.push('_');
+        for (j = 0; j < sana.length; j++){
+            if (sana[j]==arvatutKirjaimet[i]){
+                tulos[i] = sana[j]
+            }
+        }
+    }            
+return tulos
 }
-
-// console.log(kirjainCheck(['j', 'e', 'e'], ['j', 'o']))
 
 // tarkistetaan vastaako arvattu sana arvattavaa sanaa
 function wordCheck(sana, arvatutKirjaimet) {
@@ -47,7 +50,6 @@ function wordCheck(sana, arvatutKirjaimet) {
             }
         }
     }
-
     if (voititko === sana.length) {
         // console.log("Sana arvattu!")
         // console.log("Oikea sana on: ", sana)
@@ -57,17 +59,14 @@ function wordCheck(sana, arvatutKirjaimet) {
     }
 }
 
-// console.log(wordCheck(['j', 'e', 'e'], ['j', 'o', 'e']))
-
 while (guessedLetters.length < 10) {
     let arvaaKirjain = readline.question("Arvaa kirjain ");
-    console.log("Arvasit kirjaimen: ", arvaaKirjain);
+    // console.log("Arvasit kirjaimen: ", arvaaKirjain);
     guessedLetters.push(arvaaKirjain)
-    console.log(guessedLetters)
-    console.log(voititko)
+    console.log('Arvattava sana: ', kirjainCheck(word, guessedLetters))
+    console.log('Arvatut kirjaimet: ', guessedLetters)
     wordCheck(word, guessedLetters)
 }
-
     if (correctWord == word) {
         console.log("You won!")
     }

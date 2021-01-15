@@ -21,17 +21,15 @@
   justify-content: left;
   align-items: flex-start;
   flex-direction: column;
-  margin-top: 20px;
 }
 
 .welcome {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: flex-end;
   /* background-color: #3f51b5; */
-  border-radius: 5px;
-  padding: 5px 5px 5px 5px;
+  /* padding: 5px 5px 5px 5px; */
 }
 
 .item {
@@ -42,6 +40,13 @@
   font-size: 0.600rem;
   padding: 5px 5px 5px 5px;
   color: #3f51b5;
+}
+
+.drop {
+  border: 1px #3f51b5 dashed;
+  color: #3f51b5;
+  padding: 30px 30px 30px 30px;
+  margin: 20px 10px 10px 10px;
 }
 
 .buttonContainer {

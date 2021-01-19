@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import ObjectTehtava from './ObjectTehtava';
-import Objection from './Object';
+// import Objection from './Object';
+import Chat from './Chat';
 // import HuutoNet from './HuutoNet';
 // import App from './App';
 // import Map from './Map';
@@ -11,7 +12,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Objection />
+    <Chat />
   </React.StrictMode>,
   document.getElementById('root')
 );

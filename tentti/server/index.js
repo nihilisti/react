@@ -1,10 +1,31 @@
 var express = require("express")
 var cors = require("cors")
+var path = require('path')
 var bodyParser = require("body-parser")
 var app = express()
 module.exports = app
 var port = process.env.PORT || 5000
 app.use(bodyParser.json())
+app.use(express.static('./client/build'))
+
+var io = require('socket.io')(app.listen(9000));
+var pg = require('pg');
+
+var con_string = 'tcp://postgres:vaahter1@localhost/tenttikanta';
+
+var pg_client = new pg.Client(con_string);
+pg_client.connect();
+var query = pg_client.query('LISTEN addedrecord');
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('connected', { connected: true });
+
+  socket.on('ready for data', function (data) {
+    pg_client.on('notification', function (tentti) {
+      socket.emit('update', { message: tentti });
+    });
+  });
+});
 
 app.use('/kello', function (req, res, next) {
   console.log('Kello on:', Date.now())
@@ -253,6 +274,10 @@ app.delete('/', (req, res) => {
 app.put('/', (req, res) => {
   res.send('Hello World! PUT')
 })
+
+app.get('*', (req, rest) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // ÄLÄ POISTA
 app.listen(port, () => {

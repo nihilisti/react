@@ -64,7 +64,7 @@ class Chat extends Component {
                         )}
                     </div>
                     <div className="footer">
-                        <label htmlFor="name">
+                        <label htmlFor="name" className="msgItem">
                             Name:&nbsp;
           <input
                                 type="text"

@@ -14,11 +14,11 @@ var connectInfo = {}
 
 if (process.env.HEROKU) {
   connectInfo = {
-    user: '',
-    host: '',
-    database: '',
-    password: '',
-    port: ''
+    user: 'mkengyrmxwpint',
+    host: 'ec2-54-75-225-52.eu-west-1.compute.amazonaws.com',
+    database: 'damigs5cr53q87',
+    password: '695950b31c245b6214706acf871624fd73e34e47f7bd66ecfdad30ad9f3bf9e3',
+    port: 5432
   }
 } else {
   connectInfo = {
